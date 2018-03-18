@@ -76,4 +76,4 @@ WebDriverBinaryDownloader.create().strictDownload().downloadLatestBinaryAndConfi
 
 
 ## Submitting Issues
-For any issues or requests, please submit [here](https://github.com/prashant-ramcharan/courgette-jvm/issues/new)
+For any issues or requests, please submit [here](https://github.com/pramcharan/webdriver-binary-downloader/issues/new)
