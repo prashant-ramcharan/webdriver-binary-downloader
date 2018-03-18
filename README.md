@@ -1,3 +1,4 @@
+<a href='https://bintray.com/prashantr/WebDriver-Binary-Downloader/webdriver-binary-downloader/_latestVersion'><img src='https://api.bintray.com/packages/prashantr/WebDriver-Binary-Downloader/webdriver-binary-downloader/images/download.svg'></a>
 
 # WebDriver Binary Downloader #
 
@@ -16,9 +17,9 @@ WebDriver Binary Downloader conveniently downloads and configures the latest dri
 
 ## Installation
 
-#### Repository: [jcenter](https://bintray.com/bintray/jcenter?filterByPkgName=webdriver-binary-downloader)
+#### Repository: [jcenter](https://bintray.com/prashantr/WebDriver-Binary-Downloader/webdriver-binary-downloader)
 
-<a href='https://bintray.com/prashantr/Courgette-JVM/courgette-jvm?source=watch' alt='Get automatic notifications about new "courgette-jvm" versions'><img src='https://www.bintray.com/docs/images/bintray_badge_color.png'></a>
+<a href='https://bintray.com/prashantr/WebDriver-Binary-Downloader/webdriver-binary-downloader?source=watch' alt='Get automatic notifications about new "courgette-jvm" versions'><img src='https://www.bintray.com/docs/images/bintray_badge_color.png'></a>
 
 #### Maven
 ````markdown
