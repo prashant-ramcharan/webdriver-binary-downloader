@@ -15,7 +15,14 @@ public final class DecompressFileUtils {
     public static File decompressFile(File source, File destination, CompressedBinaryType compressedBinaryType) {
         createDestinationDirectory(destination);
 
-        return compressedBinaryType.equals(CompressedBinaryType.ZIP) ? unzip(source, destination) : tar(source, destination);
+        final File decompressedFile = compressedBinaryType.equals(CompressedBinaryType.ZIP) ? unzip(source, destination) : tar(source, destination);
+
+        final File[] directoryContents = decompressedFile.listFiles();
+
+        if (directoryContents != null && directoryContents.length == 0) {
+            throw new WebDriverBinaryDownloaderException("The file unpacking failed for: " + source.getAbsolutePath());
+        }
+        return decompressedFile;
     }
 
     private static File unzip(File source, File destination) {
@@ -50,8 +57,8 @@ public final class DecompressFileUtils {
 
     private static File tar(File source, File destination) {
         try {
-            Runtime.getRuntime().exec(String.format("tar -C %s -zxvf %s", destination.getAbsolutePath(), source.getAbsolutePath()));
-        } catch (IOException e) {
+            Runtime.getRuntime().exec(String.format("tar -C %s -zxvf %s", destination.getAbsolutePath(), source.getAbsolutePath())).waitFor();
+        } catch (IOException | InterruptedException e) {
             throw new WebDriverBinaryDownloaderException(e);
         }
         return destination;

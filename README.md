@@ -28,9 +28,9 @@ WebDriver Binary Downloader automatically downloads and configures the latest dr
 #### Maven
 ````markdown
 <dependency>
-  <groupId>io.github.pramcharan</groupId>
+  <groupId>io.github.prashant-ramcharan</groupId>
   <artifactId>webdriver-binary-downloader</artifactId>
-  <version>1.1.0</version>
+  <version>1.2.0</version>
   <type>pom</type>
 </dependency>
 ````
@@ -41,7 +41,7 @@ repositories {
     jcenter()
 }
 
-compile 'io.github.pramcharan:webdriver-binary-downloader:1.1.0'
+compile 'io.github.prashant-ramcharan:webdriver-binary-downloader:1.2.0'
 ````
 
 #### Included Dependencies

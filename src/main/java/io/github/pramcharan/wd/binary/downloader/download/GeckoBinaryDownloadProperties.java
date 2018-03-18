@@ -110,19 +110,11 @@ public class GeckoBinaryDownloadProperties implements BinaryDownloadProperties {
     }
 
     private String getLatestRelease() {
-        final String response = HttpUtils.getResponseContent(URLLookup.GECKODRIVER_LATEST_RELEASE_URL);
-        if (response.length() == 0) {
+        final String releaseLocation = HttpUtils.getLocation(URLLookup.GECKODRIVER_LATEST_RELEASE_URL);
+
+        if (releaseLocation == null || releaseLocation.length() < 2 || !releaseLocation.contains("/")) {
             return "";
         }
-
-        final int startOfTag = response.indexOf("\"tag_name\":\"");
-        if (startOfTag < 0) {
-            return "";
-        }
-
-        final int endOfTag = response.substring(startOfTag).indexOf(",");
-
-        final String tagName = response.substring(startOfTag, (startOfTag + endOfTag));
-        return tagName.substring(tagName.indexOf(":") + 1).replaceAll("\"", "");
+        return releaseLocation.substring(releaseLocation.lastIndexOf("/") + 1);
     }
 }
