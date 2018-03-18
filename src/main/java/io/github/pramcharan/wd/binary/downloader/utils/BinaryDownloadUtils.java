@@ -37,7 +37,7 @@ public final class BinaryDownloadUtils {
             long downloadStartTime = System.nanoTime();
 
             if (!silentDownload) {
-                out.print("[WebDriver Binary Downloader] Downloading driver binary from: " + getAbsoluteURL(downloadURL));
+                out.print("Downloading driver binary from: " + getAbsoluteURL(downloadURL));
             }
 
             FileUtils.copyURLToFile(downloadURL, downloadTo);
