@@ -1,15 +1,15 @@
 
 # WebDriver Binary Downloader #
 
-WebDriver Binary Downloader conveniently downloads and configures the latest driver binaries needed for Selenium Web Driver tests with zero configuration.
+WebDriver Binary Downloader conveniently downloads and configures the latest driver binaries needed for Selenium Web Driver tests with no configuration needed.
 
 ## Key Features
-- **Always have the latest driver binaries**as soon as its released.
-- **Zero configuration**required.
-- **Windows, MacOS and Linux**supported (32 bit and 64 bit)
-- **Latest driver binaries**are automatically downloaded and unpacked.
-- **Older driver binaries**can be automatically downloaded and unpacked.
-- **All driver binaries are cached**for quicker configuration.
+- **Always have the latest driver binaries** as soon as its released.
+- **No configuration** needed.
+- **Windows, MacOS and Linux** supported (32 bit and 64 bit)
+- **Latest driver binaries** are automatically downloaded and unpacked.
+- **Older driver binaries** can be automatically downloaded and unpacked.
+- **All driver binaries are cached** for quicker configuration.
 
 ## Requirements
 - Java 8
