@@ -3,7 +3,7 @@
 
 # WebDriver Binary Downloader #
 
-WebDriver Binary Downloader conveniently downloads and configures the latest driver binaries needed for Selenium Web Driver tests with no configuration needed.
+WebDriver Binary Downloader automatically downloads and configures the latest driver binaries needed for Selenium Web Driver tests, without the need to manually configure it yourself.
 
 ## Key Features
 - **Always have the latest driver binaries** as soon as its released.
