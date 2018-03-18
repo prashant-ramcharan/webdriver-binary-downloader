@@ -9,7 +9,7 @@ WebDriver Binary Downloader conveniently downloads and configures the latest dri
 - **Always have the latest driver binaries** as soon as its released.
 - **No configuration** needed.
 - **Windows, MacOS and Linux** supported (32 bit and 64 bit)
-- **Auto configured driver binary path** for Selenium WebDriver tests.
+- **Auto configured driver binary path** for Selenium Web Driver tests.
 - **Latest driver binaries** are automatically downloaded and unpacked.
 - **Older driver binaries** can be automatically downloaded and unpacked.
 - **All driver binaries are cached** for quicker configuration.
