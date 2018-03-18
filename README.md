@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/pramcharan/webdriver-binary-downloader.svg?branch=master)](https://travis-ci.org/pramcharan/webdriver-binary-downloader)
 <a href='https://bintray.com/prashantr/WebDriver-Binary-Downloader/webdriver-binary-downloader/_latestVersion'><img src='https://api.bintray.com/packages/prashantr/WebDriver-Binary-Downloader/webdriver-binary-downloader/images/download.svg'></a>
 
 # WebDriver Binary Downloader #
