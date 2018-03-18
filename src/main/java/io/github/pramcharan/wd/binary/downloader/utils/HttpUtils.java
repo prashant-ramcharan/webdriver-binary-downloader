@@ -2,44 +2,47 @@ package io.github.pramcharan.wd.binary.downloader.utils;
 
 import io.github.pramcharan.wd.binary.downloader.exception.WebDriverBinaryDownloaderException;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.function.Function;
 
 public final class HttpUtils {
 
-    public static String getResponseContent(String endpoint) {
-        try {
-            return new BufferedReader(new InputStreamReader(getResponseStream.apply(endpoint))).readLine();
-        } catch (IOException e) {
-            throw new WebDriverBinaryDownloaderException(e);
-        }
+    public static String getLocation(String endpoint) {
+        return extract(connection.apply(endpoint), t -> t.getHeaderField("Location"));
     }
 
     public static InputStream getResponseInputStream(String endpoint) {
-        return getResponseStream.apply(endpoint);
+        return extract(connection.apply(endpoint), t -> {
+            try {
+                return t.getInputStream();
+            } catch (IOException e) {
+                throw new WebDriverBinaryDownloaderException(e);
+            }
+        });
     }
 
-    private static Function<String, InputStream> getResponseStream = (endpoint) -> {
+    private static Function<String, HttpURLConnection> connection = (endpoint) -> {
+        HttpURLConnection.setFollowRedirects(false);
+
         final HttpURLConnection connection;
 
         try {
             URL url = new URL(endpoint);
             connection = (HttpURLConnection) url.openConnection();
-            connection.setInstanceFollowRedirects(true);
-            connection.setRequestMethod("GET");
-
-            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                return connection.getInputStream();
-            }
+            connection.setDoInput(true);
+            connection.connect();
+            return connection;
         } catch (Exception e) {
             throw new WebDriverBinaryDownloaderException(e);
+        } finally {
+            HttpURLConnection.setFollowRedirects(true);
         }
-        throw new WebDriverBinaryDownloaderException("Unable to get the Http response input stream. Response headers -> " + Arrays.toString(connection.getHeaderFields().values().toArray()));
     };
+
+    private static <T> T extract(HttpURLConnection connection, Function<HttpURLConnection, T> condition) {
+        return condition.apply(connection);
+    }
 }

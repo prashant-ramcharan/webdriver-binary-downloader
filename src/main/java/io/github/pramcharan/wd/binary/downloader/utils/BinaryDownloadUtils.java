@@ -53,6 +53,6 @@ public final class BinaryDownloadUtils {
     }
 
     private static String getAbsoluteURL(URL url) {
-        return url.getProtocol() + "//:" + url.getHost() + url.getPath();
+        return url.getProtocol() + "://" + url.getHost() + url.getPath();
     }
 }
