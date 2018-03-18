@@ -13,30 +13,30 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.function.Function;
 
-public class GeckoDownloadProperties implements DownloadProperties {
+public class GeckoBinaryDownloadProperties implements BinaryDownloadProperties {
     private String release;
 
     private final String BINARY_DOWNLOAD_URL_TAR_PATTERN = "%s/%s/geckodriver-%s-%s.tar.gz";
     private final String BINARY_DOWNLOAD_URL_ZIP_PATTERN = "%s/%s/geckodriver-%s-%s.zip";
 
-    private GeckoDownloadProperties() {
-        release = getLatestReleaseNo();
+    private GeckoBinaryDownloadProperties() {
+        release = getLatestRelease();
 
         if (release.length() == 0) {
             throw new WebDriverBinaryDownloaderException("Unable to read the latest GeckoDriver release from: " + URLLookup.GECKODRIVER_LATEST_RELEASE_URL);
         }
     }
 
-    private GeckoDownloadProperties(String release) {
+    private GeckoBinaryDownloadProperties(String release) {
         this.release = release;
     }
 
-    public static GeckoDownloadProperties forLatestRelease() {
-        return new GeckoDownloadProperties();
+    public static GeckoBinaryDownloadProperties forLatestRelease() {
+        return new GeckoBinaryDownloadProperties();
     }
 
-    public static GeckoDownloadProperties forPreviousRelease(String release) {
-        return new GeckoDownloadProperties(release);
+    public static GeckoBinaryDownloadProperties forPreviousRelease(String release) {
+        return new GeckoBinaryDownloadProperties(release);
     }
 
     @Override
@@ -91,7 +91,7 @@ public class GeckoDownloadProperties implements DownloadProperties {
     }
 
     @Override
-    public String getBinaryName() {
+    public String getBinaryFilename() {
         return getBinaryEnvironment().getOsType().equals(OsType.WIN) ? "geckodriver.exe" : "geckodriver";
     }
 
@@ -104,8 +104,13 @@ public class GeckoDownloadProperties implements DownloadProperties {
         return "GeckoDriver";
     }
 
-    private String getLatestReleaseNo() {
-        final String response = HttpUtils.getHttpResponseContent(URLLookup.GECKODRIVER_LATEST_RELEASE_URL);
+    @Override
+    public String getBinaryVersion() {
+        return release;
+    }
+
+    private String getLatestRelease() {
+        final String response = HttpUtils.getResponseContent(URLLookup.GECKODRIVER_LATEST_RELEASE_URL);
         if (response.length() == 0) {
             return "";
         }

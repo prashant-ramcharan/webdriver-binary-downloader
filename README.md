@@ -26,7 +26,7 @@ WebDriver Binary Downloader conveniently downloads and configures the latest dri
 <dependency>
   <groupId>io.github.pramcharan</groupId>
   <artifactId>webdriver-binary-downloader</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
   <type>pom</type>
 </dependency>
 ````
@@ -37,7 +37,7 @@ repositories {
     jcenter()
 }
 
-compile 'io.github.pramcharan:webdriver-binary-downloader:1.0.0'
+compile 'io.github.pramcharan:webdriver-binary-downloader:1.1.0'
 ````
 
 #### Included Dependencies
@@ -47,6 +47,7 @@ compile 'io.github.pramcharan:webdriver-binary-downloader:1.0.0'
 #### Currently Supported Driver Binaries
 * ChromeDriver
 * GeckoDriver
+* IEDriver
 
 
 ## Usage
@@ -54,6 +55,10 @@ compile 'io.github.pramcharan:webdriver-binary-downloader:1.0.0'
 Download the latest binary
 ````java
 WebDriverBinaryDownloader.create().downloadLatestBinaryAndConfigure(BrowserType.CHROME);
+
+WebDriverBinaryDownloader.create().downloadLatestBinaryAndConfigure(BrowserType.FIREFOX);
+
+WebDriverBinaryDownloader.create().downloadLatestBinaryAndConfigure(BrowserType.IEXPLORER);
 ````
 
 Download an older binary

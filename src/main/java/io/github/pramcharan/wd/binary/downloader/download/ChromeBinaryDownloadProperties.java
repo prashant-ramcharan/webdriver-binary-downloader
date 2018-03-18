@@ -12,29 +12,29 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class ChromeDownloadProperties implements DownloadProperties {
+public class ChromeBinaryDownloadProperties implements BinaryDownloadProperties {
     private String release;
 
     private final String BINARY_DOWNLOAD_URL_PATTERN = "%s/%s/chromedriver_%s.zip";
 
-    private ChromeDownloadProperties() {
-        release = getLatestReleaseNo();
+    private ChromeBinaryDownloadProperties() {
+        release = getLatestRelease();
 
         if (release.length() == 0) {
             throw new WebDriverBinaryDownloaderException("Unable to read the latest ChromeDriver release from: " + URLLookup.CHROMEDRIVER_LATEST_RELEASE_URL);
         }
     }
 
-    private ChromeDownloadProperties(String release) {
+    private ChromeBinaryDownloadProperties(String release) {
         this.release = release;
     }
 
-    public static ChromeDownloadProperties forLatestRelease() {
-        return new ChromeDownloadProperties();
+    public static ChromeBinaryDownloadProperties forLatestRelease() {
+        return new ChromeBinaryDownloadProperties();
     }
 
-    public static ChromeDownloadProperties forPreviousRelease(String release) {
-        return new ChromeDownloadProperties(release);
+    public static ChromeBinaryDownloadProperties forPreviousRelease(String release) {
+        return new ChromeBinaryDownloadProperties(release);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class ChromeDownloadProperties implements DownloadProperties {
     }
 
     @Override
-    public String getBinaryName() {
+    public String getBinaryFilename() {
         return getBinaryEnvironment().getOsType().equals(OsType.WIN) ? "chromedriver.exe" : "chromedriver";
     }
 
@@ -81,7 +81,12 @@ public class ChromeDownloadProperties implements DownloadProperties {
         return "ChromeDriver";
     }
 
-    private String getLatestReleaseNo() {
+    @Override
+    public String getBinaryVersion() {
+        return release;
+    }
+
+    private String getLatestRelease() {
         try {
             return BinaryDownloadUtils.downloadAndReadFile(new URL(URLLookup.CHROMEDRIVER_LATEST_RELEASE_URL));
         } catch (MalformedURLException e) {

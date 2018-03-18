@@ -1,8 +1,10 @@
 package io.github.pramcharan.wd.binary.downloader;
 
-import io.github.pramcharan.wd.binary.downloader.download.ChromeDownloadProperties;
-import io.github.pramcharan.wd.binary.downloader.download.DownloadProperties;
-import io.github.pramcharan.wd.binary.downloader.download.GeckoDownloadProperties;
+import io.github.pramcharan.wd.binary.downloader.domain.DownloadResult;
+import io.github.pramcharan.wd.binary.downloader.download.BinaryDownloadProperties;
+import io.github.pramcharan.wd.binary.downloader.download.ChromeBinaryDownloadProperties;
+import io.github.pramcharan.wd.binary.downloader.download.GeckoBinaryDownloadProperties;
+import io.github.pramcharan.wd.binary.downloader.download.IExplorerBinaryDownloadProperties;
 import io.github.pramcharan.wd.binary.downloader.enums.BrowserType;
 import io.github.pramcharan.wd.binary.downloader.exception.WebDriverBinaryDownloaderException;
 import io.github.pramcharan.wd.binary.downloader.utils.BinaryDownloadUtils;
@@ -17,9 +19,10 @@ import static java.lang.System.out;
 import static java.lang.System.setProperty;
 
 public class WebDriverBinaryDownloader {
-    private boolean strictDownload;
-    private DownloadProperties downloadProperties;
+    private BinaryDownloadProperties binaryDownloadProperties;
     private File binaryDownloadDirectory;
+
+    private boolean strictDownload;
 
     private WebDriverBinaryDownloader() {
         createBinaryDownloadDirectory();
@@ -29,14 +32,14 @@ public class WebDriverBinaryDownloader {
         return new WebDriverBinaryDownloader();
     }
 
-    public void downloadLatestBinaryAndConfigure(BrowserType browserType) {
+    public DownloadResult downloadLatestBinaryAndConfigure(BrowserType browserType) {
         createDownloadProperties.accept(browserType, null);
-        downloadBinaryAndConfigure(browserType);
+        return downloadBinaryAndConfigure(browserType);
     }
 
-    public void downloadBinaryAndConfigure(BrowserType browserType, String release) {
+    public DownloadResult downloadBinaryAndConfigure(BrowserType browserType, String release) {
         createDownloadProperties.accept(browserType, release);
-        downloadBinaryAndConfigure(browserType);
+        return downloadBinaryAndConfigure(browserType);
     }
 
     public WebDriverBinaryDownloader strictDownload() {
@@ -47,36 +50,41 @@ public class WebDriverBinaryDownloader {
     private BiConsumer<BrowserType, String> createDownloadProperties = ((browserType, release) -> {
         switch (browserType) {
             case CHROME:
-                this.downloadProperties = release == null ? ChromeDownloadProperties.forLatestRelease() : ChromeDownloadProperties.forPreviousRelease(release);
+                this.binaryDownloadProperties = release == null ? ChromeBinaryDownloadProperties.forLatestRelease() : ChromeBinaryDownloadProperties.forPreviousRelease(release);
                 break;
 
             case FIREFOX:
-                this.downloadProperties = release == null ? GeckoDownloadProperties.forLatestRelease() : GeckoDownloadProperties.forPreviousRelease(release);
+                this.binaryDownloadProperties = release == null ? GeckoBinaryDownloadProperties.forLatestRelease() : GeckoBinaryDownloadProperties.forPreviousRelease(release);
+                break;
+
+            case IEXPLORER:
+                this.binaryDownloadProperties = release == null ? IExplorerBinaryDownloadProperties.forLatestRelease() : IExplorerBinaryDownloadProperties.forPreviousRelease(release);
                 break;
         }
     });
 
-    private WebDriverBinaryDownloader downloadBinaryAndConfigure(BrowserType browserType) {
+    private DownloadResult downloadBinaryAndConfigure(BrowserType browserType) {
         if (!strictDownload && getWebDriverBinary().exists()) {
             out.println("Re-using an existing driver binary found at: " + getWebDriverBinary().getParent());
         } else {
-            BinaryDownloadUtils.downloadBinary(downloadProperties.getDownloadURL(), downloadProperties.getCompressedBinaryFile());
+            BinaryDownloadUtils.downloadBinary(binaryDownloadProperties.getDownloadURL(), binaryDownloadProperties.getCompressedBinaryFile());
 
-            out.println(String.format("%s successfully downloaded to: %s", downloadProperties.getBinaryDriverName(), getWebDriverBinary().getParent()));
+            out.println(String.format("%s successfully downloaded to: %s", binaryDownloadProperties.getBinaryDriverName(), getWebDriverBinary().getParent()));
 
             decompressBinary();
         }
         configureBinary(browserType);
-        return this;
+
+        return new DownloadResult(binaryDownloadProperties.getBinaryDriverName(), binaryDownloadProperties.getBinaryVersion(), getWebDriverBinary().getAbsolutePath());
     }
 
     private File decompressBinary() {
         final File decompressedBinary = DecompressFileUtils.decompressFile(
-                downloadProperties.getCompressedBinaryFile(),
-                new File(binaryDownloadDirectory + File.separator + downloadProperties.getBinaryDirectory()),
-                downloadProperties.getCompressedBinaryType());
+                binaryDownloadProperties.getCompressedBinaryFile(),
+                new File(binaryDownloadDirectory + File.separator + binaryDownloadProperties.getBinaryDirectory()),
+                binaryDownloadProperties.getCompressedBinaryType());
 
-        switch (downloadProperties.getBinaryEnvironment().getOsType()) {
+        switch (binaryDownloadProperties.getBinaryEnvironment().getOsType()) {
             case MAC:
             case LINUX:
                 try {
@@ -98,6 +106,10 @@ public class WebDriverBinaryDownloader {
                 setProperty("webdriver.gecko.driver", getWebDriverBinary().getAbsolutePath());
                 break;
             }
+            case IEXPLORER: {
+                setProperty("webdriver.ie.driver", getWebDriverBinary().getAbsolutePath());
+                break;
+            }
         }
     }
 
@@ -112,8 +124,8 @@ public class WebDriverBinaryDownloader {
     private File getWebDriverBinary() {
         return new File(binaryDownloadDirectory.getAbsolutePath() +
                 File.separator +
-                downloadProperties.getBinaryDirectory() +
+                binaryDownloadProperties.getBinaryDirectory() +
                 File.separator +
-                downloadProperties.getBinaryName());
+                binaryDownloadProperties.getBinaryFilename());
     }
 }

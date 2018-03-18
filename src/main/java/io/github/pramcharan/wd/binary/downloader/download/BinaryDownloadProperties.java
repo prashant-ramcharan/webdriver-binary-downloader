@@ -6,7 +6,7 @@ import io.github.pramcharan.wd.binary.downloader.enums.CompressedBinaryType;
 import java.io.File;
 import java.net.URL;
 
-public interface DownloadProperties {
+public interface BinaryDownloadProperties {
     URL getDownloadURL();
 
     OsEnvironment getBinaryEnvironment();
@@ -15,9 +15,11 @@ public interface DownloadProperties {
 
     CompressedBinaryType getCompressedBinaryType();
 
-    String getBinaryName();
+    String getBinaryFilename();
 
     String getBinaryDirectory();
 
     String getBinaryDriverName();
+
+    String getBinaryVersion();
 }
