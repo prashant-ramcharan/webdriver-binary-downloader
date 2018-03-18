@@ -1,9 +1,11 @@
 [![Build Status](https://travis-ci.org/pramcharan/webdriver-binary-downloader.svg?branch=master)](https://travis-ci.org/pramcharan/webdriver-binary-downloader)
 <a href='https://bintray.com/prashantr/WebDriver-Binary-Downloader/webdriver-binary-downloader/_latestVersion'><img src='https://api.bintray.com/packages/prashantr/WebDriver-Binary-Downloader/webdriver-binary-downloader/images/download.svg'></a>
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 
 # WebDriver Binary Downloader #
 
-WebDriver Binary Downloader automatically downloads and configures the latest driver binaries needed for Selenium Web Driver tests, without the need to manually configure it yourself.
+WebDriver Binary Downloader automatically downloads and configures the latest driver binaries needed for Selenium Web Driver tests, without any need for explicit configuration.
 
 ## Key Features
 - **Always have the latest driver binaries** as soon as its released.
