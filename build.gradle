@@ -1,4 +1,4 @@
-group 'io.github.pramcharan'
+group 'io.github.prashant-ramcharan'
 version '1.2.0'
 
 apply plugin: 'java'
