@@ -72,7 +72,7 @@ WebDriverBinaryDownloader.create().downloadBinaryAndConfigure(BrowserType.CHROME
 
 Download a binary for a specific architecture
 ````java
-WebDriverBinaryDownloader.create().downloadLatestBinaryAndConfigure(BrowserType.CHROME, TargetArch.X86);
+WebDriverBinaryDownloader.create().downloadLatestBinaryAndConfigure(BrowserType.IEXPLORER, TargetArch.X86);
 ````
 
 Once a binary is downloaded for a specific release, it will remain cached unless its manually deleted. 
