@@ -26,7 +26,7 @@ WebDriver Binary Downloader automatically downloads and configures the latest dr
 <a href='https://bintray.com/prashantr/WebDriver-Binary-Downloader/webdriver-binary-downloader?source=watch' alt='Get automatic notifications about new "courgette-jvm" versions'><img src='https://www.bintray.com/docs/images/bintray_badge_color.png'></a>
 
 #### Maven
-````markdown
+````xml
 <repositories>
     <repository>
       <id>jcenter</id>
@@ -42,7 +42,7 @@ WebDriver Binary Downloader automatically downloads and configures the latest dr
 ````
 
 #### Gradle
-````markdown
+````gradle
 repositories {
     jcenter()
 }
