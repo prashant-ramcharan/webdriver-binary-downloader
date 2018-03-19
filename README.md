@@ -27,11 +27,17 @@ WebDriver Binary Downloader automatically downloads and configures the latest dr
 
 #### Maven
 ````markdown
+<repositories>
+    <repository>
+      <id>jcenter</id>
+      <url>https://jcenter.bintray.com/</url>
+    </repository>
+</repositories>
+
 <dependency>
   <groupId>io.github.prashant-ramcharan</groupId>
   <artifactId>webdriver-binary-downloader</artifactId>
   <version>1.2.1</version>
-  <type>pom</type>
 </dependency>
 ````
 
