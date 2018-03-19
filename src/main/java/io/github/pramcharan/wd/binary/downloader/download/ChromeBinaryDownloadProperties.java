@@ -2,6 +2,7 @@ package io.github.pramcharan.wd.binary.downloader.download;
 
 import io.github.pramcharan.wd.binary.downloader.domain.OsEnvironment;
 import io.github.pramcharan.wd.binary.downloader.domain.URLLookup;
+import io.github.pramcharan.wd.binary.downloader.enums.TargetArch;
 import io.github.pramcharan.wd.binary.downloader.enums.CompressedBinaryType;
 import io.github.pramcharan.wd.binary.downloader.enums.OsType;
 import io.github.pramcharan.wd.binary.downloader.exception.WebDriverBinaryDownloaderException;
@@ -14,6 +15,7 @@ import java.net.URL;
 
 public class ChromeBinaryDownloadProperties implements BinaryDownloadProperties {
     private String release;
+    private TargetArch targetArch;
 
     private final String BINARY_DOWNLOAD_URL_PATTERN = "%s/%s/chromedriver_%s.zip";
 
@@ -54,7 +56,12 @@ public class ChromeBinaryDownloadProperties implements BinaryDownloadProperties 
     @Override
     public OsEnvironment getBinaryEnvironment() {
         final OsEnvironment osEnvironment = OsEnvironment.create();
-        return osEnvironment.getOsType().equals(OsType.WIN) ? OsEnvironment.create(32) : osEnvironment;
+
+        return targetArch != null
+                ? OsEnvironment.create(targetArch.getValue())
+                : osEnvironment.getOsType().equals(OsType.WIN)
+                ? OsEnvironment.create(32)
+                : osEnvironment;
     }
 
     @Override
@@ -84,6 +91,11 @@ public class ChromeBinaryDownloadProperties implements BinaryDownloadProperties 
     @Override
     public String getBinaryVersion() {
         return release;
+    }
+
+    @Override
+    public void setBinaryArchitecture(TargetArch targetArch) {
+        this.targetArch = targetArch;
     }
 
     private String getLatestRelease() {

@@ -5,6 +5,7 @@ import io.github.pramcharan.wd.binary.downloader.download.BinaryDownloadProperti
 import io.github.pramcharan.wd.binary.downloader.download.ChromeBinaryDownloadProperties;
 import io.github.pramcharan.wd.binary.downloader.download.GeckoBinaryDownloadProperties;
 import io.github.pramcharan.wd.binary.downloader.download.IExplorerBinaryDownloadProperties;
+import io.github.pramcharan.wd.binary.downloader.enums.TargetArch;
 import io.github.pramcharan.wd.binary.downloader.enums.BrowserType;
 import io.github.pramcharan.wd.binary.downloader.exception.WebDriverBinaryDownloaderException;
 import io.github.pramcharan.wd.binary.downloader.utils.BinaryDownloadUtils;
@@ -13,7 +14,6 @@ import io.github.pramcharan.wd.binary.downloader.utils.TempFileUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.function.BiConsumer;
 
 import static java.lang.System.out;
 import static java.lang.System.setProperty;
@@ -33,13 +33,19 @@ public class WebDriverBinaryDownloader {
     }
 
     public DownloadResult downloadLatestBinaryAndConfigure(BrowserType browserType) {
-        createDownloadProperties.accept(browserType, null);
-        return downloadBinaryAndConfigure(browserType);
+        return withDownloadProperties(browserType, null, null).downloadBinaryAndConfigure(browserType);
+    }
+
+    public DownloadResult downloadLatestBinaryAndConfigure(BrowserType browserType, TargetArch targetArch) {
+        return withDownloadProperties(browserType, null, targetArch).downloadBinaryAndConfigure(browserType);
     }
 
     public DownloadResult downloadBinaryAndConfigure(BrowserType browserType, String release) {
-        createDownloadProperties.accept(browserType, release);
-        return downloadBinaryAndConfigure(browserType);
+        return withDownloadProperties(browserType, release, null).downloadBinaryAndConfigure(browserType);
+    }
+
+    public DownloadResult downloadBinaryAndConfigure(BrowserType browserType, String release, TargetArch targetArch) {
+        return withDownloadProperties(browserType, release, targetArch).downloadBinaryAndConfigure(browserType);
     }
 
     public WebDriverBinaryDownloader strictDownload() {
@@ -47,7 +53,7 @@ public class WebDriverBinaryDownloader {
         return this;
     }
 
-    private BiConsumer<BrowserType, String> createDownloadProperties = ((browserType, release) -> {
+    private WebDriverBinaryDownloader withDownloadProperties(BrowserType browserType, String release, TargetArch targetArch) {
         switch (browserType) {
             case CHROME:
                 this.binaryDownloadProperties = release == null ? ChromeBinaryDownloadProperties.forLatestRelease() : ChromeBinaryDownloadProperties.forPreviousRelease(release);
@@ -61,7 +67,11 @@ public class WebDriverBinaryDownloader {
                 this.binaryDownloadProperties = release == null ? IExplorerBinaryDownloadProperties.forLatestRelease() : IExplorerBinaryDownloadProperties.forPreviousRelease(release);
                 break;
         }
-    });
+        if (targetArch != null) {
+            this.binaryDownloadProperties.setBinaryArchitecture(targetArch);
+        }
+        return this;
+    }
 
     private DownloadResult downloadBinaryAndConfigure(BrowserType browserType) {
         if (!strictDownload && getWebDriverBinary().exists()) {
