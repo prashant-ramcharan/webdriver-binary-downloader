@@ -1,6 +1,7 @@
 package io.github.pramcharan.wd.binary.downloader.download;
 
 import io.github.pramcharan.wd.binary.downloader.domain.OsEnvironment;
+import io.github.pramcharan.wd.binary.downloader.enums.TargetArch;
 import io.github.pramcharan.wd.binary.downloader.enums.CompressedBinaryType;
 
 import java.io.File;
@@ -22,4 +23,6 @@ public interface BinaryDownloadProperties {
     String getBinaryDriverName();
 
     String getBinaryVersion();
+
+    void setBinaryArchitecture(TargetArch targetArch);
 }

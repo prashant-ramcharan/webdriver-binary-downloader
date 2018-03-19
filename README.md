@@ -30,7 +30,7 @@ WebDriver Binary Downloader automatically downloads and configures the latest dr
 <dependency>
   <groupId>io.github.prashant-ramcharan</groupId>
   <artifactId>webdriver-binary-downloader</artifactId>
-  <version>1.2.0</version>
+  <version>1.2.1</version>
   <type>pom</type>
 </dependency>
 ````
@@ -41,7 +41,7 @@ repositories {
     jcenter()
 }
 
-compile 'io.github.prashant-ramcharan:webdriver-binary-downloader:1.2.0'
+compile 'io.github.prashant-ramcharan:webdriver-binary-downloader:1.2.1'
 ````
 
 #### Included Dependencies
@@ -68,6 +68,11 @@ WebDriverBinaryDownloader.create().downloadLatestBinaryAndConfigure(BrowserType.
 Download an older binary
 ````java
 WebDriverBinaryDownloader.create().downloadBinaryAndConfigure(BrowserType.CHROME, "2.35");
+````
+
+Download a binary for a specific architecture
+````java
+WebDriverBinaryDownloader.create().downloadLatestBinaryAndConfigure(BrowserType.CHROME, TargetArch.X86);
 ````
 
 Once a binary is downloaded for a specific release, it will remain cached unless its manually deleted. 

@@ -2,6 +2,7 @@ package io.github.pramcharan.wd.binary.downloader.download;
 
 import io.github.pramcharan.wd.binary.downloader.domain.OsEnvironment;
 import io.github.pramcharan.wd.binary.downloader.domain.URLLookup;
+import io.github.pramcharan.wd.binary.downloader.enums.TargetArch;
 import io.github.pramcharan.wd.binary.downloader.enums.CompressedBinaryType;
 import io.github.pramcharan.wd.binary.downloader.exception.WebDriverBinaryDownloaderException;
 import io.github.pramcharan.wd.binary.downloader.utils.HttpUtils;
@@ -22,6 +23,7 @@ import java.util.function.Function;
 
 public class IExplorerBinaryDownloadProperties implements BinaryDownloadProperties {
     private String release;
+    private TargetArch targetArch;
 
     private final String BINARY_DOWNLOAD_URL_PATTERN = "%s/%s/IEDriverServer_%s_%s.0.zip";
 
@@ -64,7 +66,7 @@ public class IExplorerBinaryDownloadProperties implements BinaryDownloadProperti
 
     @Override
     public OsEnvironment getBinaryEnvironment() {
-        return OsEnvironment.create();
+        return targetArch != null ? OsEnvironment.create(targetArch.getValue()) : OsEnvironment.create();
     }
 
     @Override
@@ -94,6 +96,11 @@ public class IExplorerBinaryDownloadProperties implements BinaryDownloadProperti
     @Override
     public String getBinaryVersion() {
         return release;
+    }
+
+    @Override
+    public void setBinaryArchitecture(TargetArch targetArch) {
+        this.targetArch = targetArch;
     }
 
     private String getLatestRelease() {
