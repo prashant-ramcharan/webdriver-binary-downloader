@@ -37,7 +37,7 @@ WebDriver Binary Downloader automatically downloads and configures the latest dr
 <dependency>
   <groupId>io.github.prashant-ramcharan</groupId>
   <artifactId>webdriver-binary-downloader</artifactId>
-  <version>1.2.1</version>
+  <version>1.2.2</version>
 </dependency>
 ````
 
@@ -47,7 +47,7 @@ repositories {
     jcenter()
 }
 
-compile 'io.github.prashant-ramcharan:webdriver-binary-downloader:1.2.1'
+compile 'io.github.prashant-ramcharan:webdriver-binary-downloader:1.2.2'
 ````
 
 #### Included Dependencies

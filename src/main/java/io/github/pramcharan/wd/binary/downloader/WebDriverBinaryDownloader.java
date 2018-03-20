@@ -5,8 +5,8 @@ import io.github.pramcharan.wd.binary.downloader.download.BinaryDownloadProperti
 import io.github.pramcharan.wd.binary.downloader.download.ChromeBinaryDownloadProperties;
 import io.github.pramcharan.wd.binary.downloader.download.GeckoBinaryDownloadProperties;
 import io.github.pramcharan.wd.binary.downloader.download.IExplorerBinaryDownloadProperties;
-import io.github.pramcharan.wd.binary.downloader.enums.TargetArch;
 import io.github.pramcharan.wd.binary.downloader.enums.BrowserType;
+import io.github.pramcharan.wd.binary.downloader.enums.TargetArch;
 import io.github.pramcharan.wd.binary.downloader.exception.WebDriverBinaryDownloaderException;
 import io.github.pramcharan.wd.binary.downloader.utils.BinaryDownloadUtils;
 import io.github.pramcharan.wd.binary.downloader.utils.DecompressFileUtils;
@@ -24,12 +24,20 @@ public class WebDriverBinaryDownloader {
 
     private boolean strictDownload;
 
-    private WebDriverBinaryDownloader() {
-        createBinaryDownloadDirectory();
+    private WebDriverBinaryDownloader(String downloadLocation) {
+        binaryDownloadDirectory = new File(downloadLocation + File.separator + "webdriver_binaries" + File.separator);
+
+        if (!binaryDownloadDirectory.exists()) {
+            binaryDownloadDirectory.mkdirs();
+        }
     }
 
     public static WebDriverBinaryDownloader create() {
-        return new WebDriverBinaryDownloader();
+        return new WebDriverBinaryDownloader(TempFileUtils.getTempDirectory());
+    }
+
+    public static WebDriverBinaryDownloader createIn(String downloadLocation) {
+        return new WebDriverBinaryDownloader(downloadLocation);
     }
 
     public DownloadResult downloadLatestBinaryAndConfigure(BrowserType browserType) {
@@ -120,14 +128,6 @@ public class WebDriverBinaryDownloader {
                 setProperty("webdriver.ie.driver", getWebDriverBinary().getAbsolutePath());
                 break;
             }
-        }
-    }
-
-    private void createBinaryDownloadDirectory() {
-        binaryDownloadDirectory = new File(TempFileUtils.getTempDirectory() + "webdriver_binaries" + File.separator);
-
-        if (!binaryDownloadDirectory.exists()) {
-            binaryDownloadDirectory.mkdir();
         }
     }
 
