@@ -24,12 +24,16 @@ public class WebDriverBinaryDownloader {
 
     private boolean strictDownload;
 
-    private WebDriverBinaryDownloader() {
-        createBinaryDownloadDirectory();
+    private WebDriverBinaryDownloader(String downloadLocation) {
+	createBinaryDownloadDirectory(downloadLocation);
     }
 
     public static WebDriverBinaryDownloader create() {
-        return new WebDriverBinaryDownloader();
+	return new WebDriverBinaryDownloader(null);
+    }
+
+    public static WebDriverBinaryDownloader createIn(String downloadLocation) {
+	return new WebDriverBinaryDownloader(downloadLocation);
     }
 
     public DownloadResult downloadLatestBinaryAndConfigure(BrowserType browserType) {
@@ -123,11 +127,16 @@ public class WebDriverBinaryDownloader {
         }
     }
 
-    private void createBinaryDownloadDirectory() {
-        binaryDownloadDirectory = new File(TempFileUtils.getTempDirectory() + "webdriver_binaries" + File.separator);
+    private void createBinaryDownloadDirectory(String downloadLocation) {
+	if (downloadLocation == null)
+	    binaryDownloadDirectory = new File(
+		    TempFileUtils.getTempDirectory() + "webdriver_binaries" + File.separator);
+	else
+	    binaryDownloadDirectory = new File(
+		    downloadLocation + File.separator + "webdriver_binaries" + File.separator);
 
         if (!binaryDownloadDirectory.exists()) {
-            binaryDownloadDirectory.mkdir();
+	    binaryDownloadDirectory.mkdirs();
         }
     }
 
