@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/prashant-ramcharan/webdriver-binary-downloader.svg?branch=master)](https://travis-ci.org/pramcharan/webdriver-binary-downloader)
+[![Build Status](https://travis-ci.org/prashant-ramcharan/webdriver-binary-downloader.svg?branch=master)](https://travis-ci.org/prashant-ramcharan/webdriver-binary-downloader)
 <a href='https://bintray.com/prashantr/WebDriver-Binary-Downloader/webdriver-binary-downloader/_latestVersion'><img src='https://api.bintray.com/packages/prashantr/WebDriver-Binary-Downloader/webdriver-binary-downloader/images/download.svg'></a>
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
