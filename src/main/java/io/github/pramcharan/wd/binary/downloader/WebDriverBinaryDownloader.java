@@ -5,7 +5,7 @@ import io.github.pramcharan.wd.binary.downloader.download.BinaryDownloadProperti
 import io.github.pramcharan.wd.binary.downloader.download.ChromeBinaryDownloadProperties;
 import io.github.pramcharan.wd.binary.downloader.download.GeckoBinaryDownloadProperties;
 import io.github.pramcharan.wd.binary.downloader.download.IExplorerBinaryDownloadProperties;
-import io.github.pramcharan.wd.binary.downloader.enums.BrowserType;
+import io.github.pramcharan.wd.binary.downloader.enums.Browser;
 import io.github.pramcharan.wd.binary.downloader.enums.TargetArch;
 import io.github.pramcharan.wd.binary.downloader.exception.WebDriverBinaryDownloaderException;
 import io.github.pramcharan.wd.binary.downloader.utils.BinaryDownloadUtils;
@@ -40,20 +40,20 @@ public class WebDriverBinaryDownloader {
         return new WebDriverBinaryDownloader(downloadLocation);
     }
 
-    public DownloadResult downloadLatestBinaryAndConfigure(BrowserType browserType) {
-        return withDownloadProperties(browserType, null, null).downloadBinaryAndConfigure(browserType);
+    public DownloadResult downloadLatestBinaryAndConfigure(Browser browser) {
+        return withDownloadProperties(browser, null, null).downloadBinaryAndConfigure(browser);
     }
 
-    public DownloadResult downloadLatestBinaryAndConfigure(BrowserType browserType, TargetArch targetArch) {
-        return withDownloadProperties(browserType, null, targetArch).downloadBinaryAndConfigure(browserType);
+    public DownloadResult downloadLatestBinaryAndConfigure(Browser browser, TargetArch targetArch) {
+        return withDownloadProperties(browser, null, targetArch).downloadBinaryAndConfigure(browser);
     }
 
-    public DownloadResult downloadBinaryAndConfigure(BrowserType browserType, String release) {
-        return withDownloadProperties(browserType, release, null).downloadBinaryAndConfigure(browserType);
+    public DownloadResult downloadBinaryAndConfigure(Browser browser, String release) {
+        return withDownloadProperties(browser, release, null).downloadBinaryAndConfigure(browser);
     }
 
-    public DownloadResult downloadBinaryAndConfigure(BrowserType browserType, String release, TargetArch targetArch) {
-        return withDownloadProperties(browserType, release, targetArch).downloadBinaryAndConfigure(browserType);
+    public DownloadResult downloadBinaryAndConfigure(Browser browser, String release, TargetArch targetArch) {
+        return withDownloadProperties(browser, release, targetArch).downloadBinaryAndConfigure(browser);
     }
 
     public WebDriverBinaryDownloader strictDownload() {
@@ -61,8 +61,8 @@ public class WebDriverBinaryDownloader {
         return this;
     }
 
-    private WebDriverBinaryDownloader withDownloadProperties(BrowserType browserType, String release, TargetArch targetArch) {
-        switch (browserType) {
+    private WebDriverBinaryDownloader withDownloadProperties(Browser browser, String release, TargetArch targetArch) {
+        switch (browser) {
             case CHROME:
                 this.binaryDownloadProperties = release == null ? ChromeBinaryDownloadProperties.forLatestRelease() : ChromeBinaryDownloadProperties.forPreviousRelease(release);
                 break;
@@ -81,7 +81,7 @@ public class WebDriverBinaryDownloader {
         return this;
     }
 
-    private DownloadResult downloadBinaryAndConfigure(BrowserType browserType) {
+    private DownloadResult downloadBinaryAndConfigure(Browser browser) {
         if (!strictDownload && getWebDriverBinary().exists()) {
             out.println("Re-using an existing driver binary found at: " + getWebDriverBinary().getParent());
         } else {
@@ -91,7 +91,7 @@ public class WebDriverBinaryDownloader {
 
             decompressBinary();
         }
-        configureBinary(browserType);
+        configureBinary(browser);
 
         return new DownloadResult(binaryDownloadProperties.getBinaryDriverName(), binaryDownloadProperties.getBinaryVersion(), getWebDriverBinary().getAbsolutePath());
     }
@@ -114,8 +114,8 @@ public class WebDriverBinaryDownloader {
         return decompressedBinary;
     }
 
-    private void configureBinary(BrowserType browserType) {
-        switch (browserType) {
+    private void configureBinary(Browser browser) {
+        switch (browser) {
             case CHROME: {
                 setProperty("webdriver.chrome.driver", getWebDriverBinary().getAbsolutePath());
                 break;
