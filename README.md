@@ -37,7 +37,7 @@ WebDriver Binary Downloader automatically downloads and configures the latest dr
 <dependency>
   <groupId>io.github.prashant-ramcharan</groupId>
   <artifactId>webdriver-binary-downloader</artifactId>
-  <version>1.2.2</version>
+  <version>1.3.0</version>
 </dependency>
 ````
 
@@ -47,7 +47,7 @@ repositories {
     jcenter()
 }
 
-compile 'io.github.prashant-ramcharan:webdriver-binary-downloader:1.2.2'
+compile 'io.github.prashant-ramcharan:webdriver-binary-downloader:1.3.0'
 ````
 
 #### Included Dependencies
@@ -64,28 +64,28 @@ compile 'io.github.prashant-ramcharan:webdriver-binary-downloader:1.2.2'
 
 Download the latest binary
 ````java
-WebDriverBinaryDownloader.create().downloadLatestBinaryAndConfigure(BrowserType.CHROME);
+WebDriverBinaryDownloader.create().downloadLatestBinaryAndConfigure(Browser.CHROME);
 
-WebDriverBinaryDownloader.create().downloadLatestBinaryAndConfigure(BrowserType.FIREFOX);
+WebDriverBinaryDownloader.create().downloadLatestBinaryAndConfigure(Browser.FIREFOX);
 
-WebDriverBinaryDownloader.create().downloadLatestBinaryAndConfigure(BrowserType.IEXPLORER);
+WebDriverBinaryDownloader.create().downloadLatestBinaryAndConfigure(Browser.IEXPLORER);
 ````
 
 Download an older binary
 ````java
-WebDriverBinaryDownloader.create().downloadBinaryAndConfigure(BrowserType.CHROME, "2.35");
+WebDriverBinaryDownloader.create().downloadBinaryAndConfigure(Browser.CHROME, "2.35");
 ````
 
 Download a binary for a specific architecture
 ````java
-WebDriverBinaryDownloader.create().downloadLatestBinaryAndConfigure(BrowserType.IEXPLORER, TargetArch.X86);
+WebDriverBinaryDownloader.create().downloadLatestBinaryAndConfigure(Browser.IEXPLORER, TargetArch.X86);
 ````
 
 Once a binary is downloaded for a specific release, it will remain cached unless its manually deleted. 
 
 Use the strictDownload() method to ensure a new copy is downloaded.
 ````java
-WebDriverBinaryDownloader.create().strictDownload().downloadLatestBinaryAndConfigure(BrowserType.CHROME);
+WebDriverBinaryDownloader.create().strictDownload().downloadLatestBinaryAndConfigure(Browser.CHROME);
 ````
 
 

@@ -1,6 +1,6 @@
 package io.github.pramcharan.wd.binary.downloader.enums;
 
-public enum BrowserType {
+public enum Browser {
     CHROME,
     FIREFOX,
     IEXPLORER
