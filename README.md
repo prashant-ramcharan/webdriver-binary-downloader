@@ -1,5 +1,7 @@
+# ⛔️ DEPRECATED: This project is no longer supported
+
+
 [![Build Status](https://travis-ci.org/prashant-ramcharan/webdriver-binary-downloader.svg?branch=master)](https://travis-ci.org/prashant-ramcharan/webdriver-binary-downloader)
-<a href='https://bintray.com/prashantr/WebDriver-Binary-Downloader/webdriver-binary-downloader/_latestVersion'><img src='https://api.bintray.com/packages/prashantr/WebDriver-Binary-Downloader/webdriver-binary-downloader/images/download.svg'></a>
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 
@@ -22,8 +24,6 @@ WebDriver Binary Downloader automatically downloads and configures the latest dr
 ## Installation
 
 #### Repository: [jcenter](https://bintray.com/prashantr/WebDriver-Binary-Downloader/webdriver-binary-downloader)
-
-<a href='https://bintray.com/prashantr/WebDriver-Binary-Downloader/webdriver-binary-downloader?source=watch' alt='Get automatic notifications about new "courgette-jvm" versions'><img src='https://www.bintray.com/docs/images/bintray_badge_color.png'></a>
 
 #### Maven
 ````xml
