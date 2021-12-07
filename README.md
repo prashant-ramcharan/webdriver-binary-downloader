@@ -1,4 +1,4 @@
-# ⛔️ DEPRECATED: This project is no longer supported
+# ⛔️ DEPRECATED: This project is no longer maintained
 
 
 [![Build Status](https://travis-ci.org/prashant-ramcharan/webdriver-binary-downloader.svg?branch=master)](https://travis-ci.org/prashant-ramcharan/webdriver-binary-downloader)
